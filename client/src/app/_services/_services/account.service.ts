@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { User } from 'src/app/_models/user';
-
+import { AlertifyService } from './alertify.service';
 @Injectable({
   providedIn: 'root',
 })
