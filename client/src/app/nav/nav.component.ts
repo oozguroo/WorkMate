@@ -13,29 +13,20 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   model: any = {};
-  
+
   showDropdown = false;
 
-  constructor(public accountService: AccountService,
-    private router:Router
-    ) {}
+  constructor(public accountService: AccountService, private router: Router) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
-  }
-  
-
-  login() 
-  {
+  login() {
     this.accountService.login(this.model).subscribe({
-      next: _ => {
-        this.router.navigateByUrl('/members')
-      },
-      error: error => console.log(error)
-    })
+      next: (_) => this.router.navigateByUrl('/members'),
+    });
   }
-  
-  logout(){
+
+  logout() {
     this.accountService.logout();
   }
 }
