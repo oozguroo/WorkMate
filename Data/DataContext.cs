@@ -12,6 +12,13 @@ namespace API.Data
         public DataContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<AppUser> Users {get; set;}
+        public DbSet<AppUser> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<AppUser>()
+                .Ignore(u => u.DateOfBirth);
+        }
+
     }
 }
