@@ -13,7 +13,8 @@ namespace API.Data
 {
     public class UserRepository : IUserRepository
     {
-        public DataContext _context { get; }
+        private readonly DataContext _context;
+
         private readonly IMapper _mapper;
         public UserRepository(DataContext context, IMapper mapper)
         {
@@ -50,17 +51,17 @@ namespace API.Data
 
         public async Task<MemberDto> GetMemberAsync(string username)
         {
-           return await _context.Users
-           .Where(x=>x.UserName == username)
-           .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-         .SingleOrDefaultAsync();
+            return await _context.Users
+            .Where(x => x.UserName == username)
+            .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+          .SingleOrDefaultAsync();
         }
 
         public async Task<IEnumerable<MemberDto>> GetMemberAsync()
         {
-                return await _context.Users
-            .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+            return await _context.Users
+        .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+        .ToListAsync();
         }
     }
 }

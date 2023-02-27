@@ -6,8 +6,9 @@ import {
 } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { AlertifyService } from '../_services/_services/alertify.service';
+
 import { NavigationExtras, Router } from '@angular/router';
+import { AlertifyService } from '../_services/alertify.service';
 
 
 @Injectable()

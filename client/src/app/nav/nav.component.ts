@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AccountService } from '../_services/_services/account.service';
+
 import * as $ from 'jquery';
 import { Observable, of } from 'rxjs';
 import { User } from '../_models/user';
 import { Router } from '@angular/router';
+import { AccountService } from '../_services/account.service';
 
 @Component({
   selector: 'app-nav',
