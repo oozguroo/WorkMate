@@ -6,7 +6,7 @@
 }
 
 .card img {
-  transform: scale(1, 1);
+  transform: scale(1.0, 1.0);
   transition-duration: 500ms;
   transition-timing-function: ease-out;
 }
@@ -17,20 +17,30 @@
 }
 
 .member-icons {
-    position: center;
-    bottom: -30%;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    opacity: 0;
+  position: absolute;
+  bottom: -30%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
 }
 
 .card-img-wrapper:hover .member-icons {
-    bottom: 0;
-    opacity: 1;
+  bottom: 0;
+  opacity: 1;
 }
 
 .animate {
   transition: all 0.3s ease-in-out;
+}
+
+@keyframes fa-blink {
+  0% {opacity: 1;}
+  100% {opacity: 0.4;}
+}
+
+.is-online {
+  animation: fa-blink 1.5s linear infinite;
+  color: rgb(1, 189, 42);
 }

@@ -20,6 +20,10 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { AlertifyService } from './_services/alertify.service';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -35,11 +39,16 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
     NotFoundComponent,
     ServerErrorComponent,
     MemberCardComponent,
+    MemberEditComponent,
+   
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, SharedModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule, SharedModule,FormsModule,NgxSpinnerModule.forRoot({
+    type: 'line-scale-party'
+  })],
   providers: [AlertifyService,
              {provide:HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-             {provide:HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }          
+             {provide:HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+             {provide:HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }          
   ],
   bootstrap: [AppComponent],
 })

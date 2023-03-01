@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+
+
+
 
 
 
@@ -9,12 +12,13 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
   declarations: [],
   imports: [
     CommonModule,
-    FormsModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+  
   ],
   exports:[
-    FormsModule,
-    NgxGalleryModule
+
+    NgxGalleryModule,
+
   ]
 })
 export class SharedModule { }

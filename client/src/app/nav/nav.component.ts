@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { User } from '../_models/user';
 import { Router } from '@angular/router';
 import { AccountService } from '../_services/account.service';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-nav',
@@ -17,17 +18,20 @@ export class NavComponent implements OnInit {
 
   showDropdown = false;
 
-  constructor(public accountService: AccountService, private router: Router) {}
+  constructor(public accountService: AccountService, private router: Router, private alertifyService:AlertifyService) {}
 
   ngOnInit(): void {}
 
   login() {
     this.accountService.login(this.model).subscribe({
-      next: (_) => this.router.navigateByUrl('/members'),
-    });
-  }
+      next: _ => {this.router.navigateByUrl('/members');
+      this.model = {};
+    }
+    })
+  } 
 
   logout() {
     this.accountService.logout();
+    this.router.navigateByUrl('/');
   }
 }

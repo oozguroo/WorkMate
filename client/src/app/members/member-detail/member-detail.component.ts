@@ -12,6 +12,7 @@ import { MembersService } from 'src/app/_services/members.service';
   selector: 'app-member-detail',
   templateUrl: './member-detail.component.html',
   styleUrls: ['./member-detail.component.css'],
+  
 })
 export class MemberDetailComponent implements OnInit {
   member: Member | undefined;
@@ -36,7 +37,8 @@ export class MemberDetailComponent implements OnInit {
           imageAnimation: NgxGalleryAnimation.Slide,
           preview: false,
         },
-      ];
+      ]
+      this.galleryImages = this.getImages();
     }
 
   }
