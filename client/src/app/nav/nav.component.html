@@ -21,6 +21,7 @@
      </ng-container>
 
     <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user">
+      <img src="{{user.photoUrl || './assets/user.png'}}" alt="user photo">
       <a
         class="btn btn-secondary dropdown-toggle"
         (click)="showDropdown = !showDropdown"

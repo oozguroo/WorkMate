@@ -2,6 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { FileUploadModule } from 'ng2-file-upload';
+
+
+
+
 
 
 
@@ -13,12 +18,14 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
   imports: [
     CommonModule,
     NgxGalleryModule,
+    FileUploadModule
   
   ],
   exports:[
 
     NgxGalleryModule,
-
+    FileUploadModule
+    
   ]
 })
 export class SharedModule { }

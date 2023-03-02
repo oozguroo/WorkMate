@@ -11,7 +11,6 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
-
 import { SharedModule } from './_modules/shared.module';
 import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
@@ -24,6 +23,9 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @NgModule({
   declarations: [
@@ -40,9 +42,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     ServerErrorComponent,
     MemberCardComponent,
     MemberEditComponent,
+    PhotoEditorComponent,
    
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule, SharedModule,FormsModule,NgxSpinnerModule.forRoot({
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule,TabsModule.forRoot(),TooltipModule.forRoot(), SharedModule,FormsModule,NgxSpinnerModule.forRoot({
     type: 'line-scale-party'
   })],
   providers: [AlertifyService,
