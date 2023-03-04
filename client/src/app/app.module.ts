@@ -4,7 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
@@ -26,6 +26,9 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TextInputComponent } from './_forms/text-input/text-input.component';
+import { DatePickerComponent } from './_forms/date-picker/date-picker.component';
+
 
 @NgModule({
   declarations: [
@@ -43,9 +46,19 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     MemberCardComponent,
     MemberEditComponent,
     PhotoEditorComponent,
-   
+    TextInputComponent,
+    DatePickerComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule,TabsModule.forRoot(),TooltipModule.forRoot(), SharedModule,FormsModule,NgxSpinnerModule.forRoot({
+  imports: [BrowserModule,
+     AppRoutingModule,
+      HttpClientModule,
+     BrowserAnimationsModule,
+     TabsModule.forRoot(),
+     TooltipModule.forRoot(),
+      SharedModule,
+      FormsModule,
+      ReactiveFormsModule,
+      NgxSpinnerModule.forRoot({
     type: 'line-scale-party'
   })],
   providers: [AlertifyService,

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
-
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 
@@ -18,13 +18,15 @@ import { FileUploadModule } from 'ng2-file-upload';
   imports: [
     CommonModule,
     NgxGalleryModule,
-    FileUploadModule
-  
+    FileUploadModule,
+    BsDatepickerModule.forRoot()
+    
   ],
   exports:[
 
     NgxGalleryModule,
-    FileUploadModule
+    FileUploadModule,
+    BsDatepickerModule
     
   ]
 })
