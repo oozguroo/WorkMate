@@ -7,6 +7,7 @@ import { PaginatedResult } from '../_models/pagination';
 import { User } from '../_models/user';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
+import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +19,10 @@ export class MembersService {
   user: User | undefined;
   memberCache = new Map();
 
-
-  constructor(private http: HttpClient, private accountService: AccountService) {
+  constructor(
+    private http: HttpClient,
+    private accountService: AccountService
+  ) {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: (user) => {
         if (user) {
@@ -29,15 +32,15 @@ export class MembersService {
       },
     });
   }
-  getUserParams(){
+  getUserParams() {
     return this.userParams;
   }
-  setUserParams(params: UserParams){
+  setUserParams(params: UserParams) {
     this.userParams = params;
   }
-  resetUserParams(){
-    if(this.user){
-      this.userParams = new UserParams(this.user)
+  resetUserParams() {
+    if (this.user) {
+      this.userParams = new UserParams(this.user);
       return this.userParams;
     }
     return;
@@ -47,7 +50,7 @@ export class MembersService {
     const response = this.memberCache.get(Object.values(userParams).join('-'));
     if (response) return of(response);
 
-    let params = this.getPaginationHeaders(
+    let params = getPaginationHeaders(
       userParams.pageNumber,
       userParams.pageSize
     );
@@ -57,9 +60,10 @@ export class MembersService {
     params = params.append('gender', userParams.gender);
     params = params.append('orderBy', userParams.orderBy);
 
-    return this.getPaginatedResult<Member[]>(
+    return getPaginatedResult<Member[]>(
       this.baseUrl + 'users',
-      params
+      params,
+      this.http
     ).pipe(
       map((response) => {
         this.memberCache.set(Object.values(userParams).join('-'), response);
@@ -70,8 +74,8 @@ export class MembersService {
 
   getMember(username: string) {
     const member = [...this.memberCache.values()]
-    .reduce((arr, elem) => arr.concat(elem.result), [])
-    .find((member: Member) => member.userName === username);
+      .reduce((arr, elem) => arr.concat(elem.result), [])
+      .find((member: Member) => member.userName === username);
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
   updateMember(member: Member) {
@@ -89,43 +93,18 @@ export class MembersService {
     return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId);
   }
 
-  addLike(username:string){
-    return this.http.post(this.baseUrl + 'likes/'+ username,{});
+  addLike(username: string) {
+    return this.http.post(this.baseUrl + 'likes/' + username, {});
   }
-  getLikes(predicate:string, pageNumber: number,pageSize:number){
-    let params = this.getPaginationHeaders(pageNumber,pageSize);
+  getLikes(predicate: string, pageNumber: number, pageSize: number) {
+    let params = getPaginationHeaders(pageNumber, pageSize);
 
-    params = params.append('predicate',predicate);
+    params = params.append('predicate', predicate);
 
-    return this.getPaginatedResult<Member[]>(this.baseUrl + 'likes',params);
-
-
-  }
-
-  private getPaginatedResult<T>(url: string, params: HttpParams) {
-    const paginatedResult: PaginatedResult<T> = new PaginatedResult<T>();
-    return this.http.get<T>(url, { observe: 'response', params }).pipe(
-      map((response) => {
-        if (response.body) {
-          paginatedResult.result = response.body;
-        }
-        const pagination = response.headers.get('Pagination');
-        if (pagination) {
-          paginatedResult.pagination = JSON.parse(pagination);
-        }
-        return paginatedResult;
-      })
+    return getPaginatedResult<Member[]>(
+      this.baseUrl + 'likes',
+      params,
+      this.http
     );
   }
-
-  private getPaginationHeaders(pageNumber: number, pageSize: number) {
-    let params = new HttpParams();
-
-    params = params.append('pageNumber', pageNumber);
-    params = params.append('pageSize', pageSize);
-
-    return params;
-  }
-
- 
 }

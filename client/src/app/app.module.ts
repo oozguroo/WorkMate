@@ -22,12 +22,13 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { DatePickerComponent } from './_forms/date-picker/date-picker.component';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 
 
 @NgModule({
@@ -48,23 +49,27 @@ import { DatePickerComponent } from './_forms/date-picker/date-picker.component'
     PhotoEditorComponent,
     TextInputComponent,
     DatePickerComponent,
+    MemberMessagesComponent,
   ],
-  imports: [BrowserModule,
-     AppRoutingModule,
-      HttpClientModule,
-     BrowserAnimationsModule,
-     TabsModule.forRoot(),
-     TooltipModule.forRoot(),
-      SharedModule,
-      FormsModule,
-      ReactiveFormsModule,
-      NgxSpinnerModule.forRoot({
-    type: 'line-scale-party'
-  })],
-  providers: [AlertifyService,
-             {provide:HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-             {provide:HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-             {provide:HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }          
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    TabsModule.forRoot(),
+    TooltipModule.forRoot(),
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxSpinnerModule.forRoot({
+      type: 'line-scale-party',
+    }),
+  ],
+  providers: [
+    AlertifyService,
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })
