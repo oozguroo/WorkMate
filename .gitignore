@@ -477,3 +477,9 @@ $RECYCLE.BIN/
 *.lnk
 appsettings.json
 appsettings.Development.json
+Data/UserSeedData.json
+Data/Migrations/20230310193448_IdentityAdded.Designer.cs
+Data/Migrations/20230310193448_IdentityAdded.cs
+Data/Migrations/DataContextModelSnapshot.cs
+Data/UserSeedData.json
+.gitignore
