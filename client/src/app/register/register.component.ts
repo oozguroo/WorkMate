@@ -9,7 +9,8 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../_services/account.service';
-import { AlertifyService } from '../_services/alertify.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-register',
@@ -25,9 +26,9 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
-    private alertifyService: AlertifyService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {

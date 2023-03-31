@@ -1,73 +1,56 @@
 import { Injectable } from '@angular/core';
 import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
   HttpInterceptor,
-  HttpErrorResponse,
-  HTTP_INTERCEPTORS,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
-
+import { catchError, Observable } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
-import { AlertifyService } from '../_services/alertify.service';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private alertifyService: AlertifyService,
-    private router:Router
-    ) {}
 
-  intercept(req: import('@angular/common/http').HttpRequest<any>, next: import('@angular/common/http').HttpHandler):
-    import('rxjs').Observable<import('@angular/common/http').HttpEvent<any>> {
+  constructor(private router: Router, private toastr: ToastrService) {}
 
-    return next.handle(req).pipe(
-      catchError((error) => {
-        if (error instanceof HttpErrorResponse) {
-          const applicationError = error.headers.get('Application-Error');
-          if (applicationError) {
-            return throwError(applicationError);
-          }
-          const serverError = error.error;
-          let errorMessage = '';
-          if (serverError.errors && typeof serverError.errors === 'object') {
-            for (const key in serverError.errors) {
-              if (serverError.errors[key]) {
-                errorMessage += serverError.errors[key] + '\n';
-              }
-            }
-          } else if (typeof serverError === 'object' && serverError !== null) {
-            for (const key in serverError) {
-              if (serverError[key]) {
-                errorMessage += serverError[key] + '\n';
-              }
-            }
-          } else {
-            errorMessage = serverError;
-          }
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error) {
           switch (error.status) {
             case 400:
-              this.alertifyService.error(errorMessage || 'Bad Request');
+              if (error.error.errors) {
+                const modelStateErrors = [];
+                for (const key in error.error.errors) {
+                  if (error.error.errors[key]) {
+                    modelStateErrors.push(error.error.errors[key])
+                  }
+                }
+                throw modelStateErrors.flat();
+              } else {
+                this.toastr.error(error.error, error.status.toString())
+              }
               break;
             case 401:
-              this.alertifyService.error('Unauthorised')
+              this.toastr.error('Unauthorised', error.status.toString());
               break;
             case 404:
               this.router.navigateByUrl('/not-found');
               break;
-              case 500:
-                const navigationExtras: NavigationExtras = {state: {error: error.error}};
-                this.router.navigateByUrl('/server-error', navigationExtras);
-                break;
+            case 500:
+              const navigationExtras: NavigationExtras = {state: {error: error.error}};
+              this.router.navigateByUrl('/server-error', navigationExtras);
               break;
             default:
-              this.alertifyService.error('An unexpected error occurred.');
+              this.toastr.error('Something unexpected went wrong');
+              console.log(error);
               break;
           }
-          return throwError(errorMessage);
-        } else {
-          return throwError('An unexpected error occurred.');
         }
+        throw error;
       })
-    );
+    )
   }
 }

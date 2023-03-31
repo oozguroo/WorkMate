@@ -16,7 +16,6 @@ import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
-import { AlertifyService } from './_services/alertify.service';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
@@ -35,6 +34,7 @@ import { UserManagementComponent } from './admin/user-management/user-management
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -62,12 +62,16 @@ import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.c
     PhotoManagementComponent,
     RolesModalComponent,
     ConfirmDialogComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
+    }),
     TabsModule.forRoot(),
     TooltipModule.forRoot(),
     SharedModule,
@@ -75,10 +79,11 @@ import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.c
     ReactiveFormsModule,
     NgxSpinnerModule.forRoot({
       type: 'line-scale-party',
-    }),
+    })
+  
   ],
   providers: [
-    AlertifyService,
+    
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
