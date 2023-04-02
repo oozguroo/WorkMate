@@ -483,3 +483,6 @@ Data/Migrations/20230310193448_IdentityAdded.cs
 Data/Migrations/DataContextModelSnapshot.cs
 Data/UserSeedData.json
 .gitignore
+Data/Seed.cs
+Program.cs
+appsettings.Development.json

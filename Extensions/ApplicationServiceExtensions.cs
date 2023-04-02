@@ -14,10 +14,7 @@ namespace API.Extensions
          IConfiguration config)
         {
 
-            services.AddDbContext<DataContext>(opt =>
-            {
-                opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
-            });
+           
 
             services.AddCors();
 
