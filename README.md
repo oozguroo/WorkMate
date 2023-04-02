@@ -1,3 +1,3 @@
 # WorkMate
 Live
-https://matchmate.fly.dev/members
+https://matchmate.fly.dev/
